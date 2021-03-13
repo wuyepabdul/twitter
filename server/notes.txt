@@ -1,13 +1,22 @@
                                             IMPLEMENTATIONS
 
-        /**** BACKEND API USERS ****/
+/************************************BACKEND API ********************************************************/
+
+Middlewares:  can be found in /server/middlewares
+
+Utility functions: can be found in /server/utils
+
+Environmental variables can be found in /server/.env
+
+Database configuration can be found in /server/db/connection.js
+
 1. Sign Up and Sign In backend logic:
            
     User model can be found in /server/models/userModel.js
     api endpoints can be found in /server/routes/userRoute.js   == "/signup" && "/signin" 
     controllers can be found in /server/controllers/userController.js == functions: signupController && signinController
 
-2. /**  Follow and Unfollow a User Logic: **/
+2. Follow and Unfollow a User Logic:
    
     api endpoints can be found in /server/routes/userRoute.js   == "/follow" and "/unfollow"
     controllers can be found in /server/controllers/userController.js  == functions: followUserController & unfollowUserController
@@ -20,7 +29,38 @@
     api endpoints can be found in /server/routes/userRoute.js   == "/updatePhoto" 
     controllers can be found in /server/controllers/userController.js == function: uploadController 
 
-        /***  FRONTEND IMPLEMENTATION****/
+                TWEETS
+5. Create Tweet backend logic:
+
+    Tweet Model can be found in /server/models/tweetModel.js 
+    api endpoints can be found in /server/routes/tweetRoute.js == "/createTweet"
+    controller can be found in /server/controllers/tweetController.js == functions: createTweetController 
+
+6. Delete a Tweet backend logic:
+    api endpoints can be found in /server/routes/tweetRoute.js == "/delete"
+    controller can be found in /server/controllers/tweetController.js == function: deleteTweetController
+
+
+7. Like and Unlike a tweet backend logic:
+
+    api endpoints can be found in /server/routes/tweetRoute.js == "/like" && "/unlike"
+    controllers can be found in /server/controllers/tweetController.js == functions: likeTweetController && unlikeTweetController
+
+8. Fetch all created tweets backendlogic:
+    api endpoints can be found in /server/routes/tweetRoute.js == "/allTweets"
+    controller can be found in /server/controllers/tweetController.js == function: getAllTweetsController
+ 
+9. Fetch my tweets backend logic:
+    api endpoints can be found in /server/routes/tweetRoute.js == "/myTweets"
+    controller can be found in /server/controllers/tweetController.js == function: getMyTweetsController
+
+10. Fetch subscribed tweets backend logic:
+    api endpoints can be found in /server/routes/userRoute.js == "/subscribedTweets"
+    controllers can be found in /server/controllers/userController.js == function: getSubscribedTweetsController
+
+
+/*******************************************FRONTEND IMPLEMENTATION ********************************************/
+
 1. Sign up:
     component can be found in /server/client/src/components/Signup/Signup.js
     api call can be found in /server/client/src/api/userAuth.js == function: signup
@@ -33,56 +73,22 @@
     user redux actions can be found in /server/client/src/redux/actions/userActions.js == function: userActions
     user redux reducer can be found in /server/client/src/reducer/reducers/userReducer.js == function: userReducer
 
- .Tweet: -> For Creating tweets
+3 .Tweet: -> For Creating tweets
     component can be found in /server/client/src/components/screens/Tweet/Tweet.js
     
 
-3. Home Page -> Displays logged In User's tweets :
+4. Home Page -> Displays logged In User's tweets :
     component can be found in /server/client/src/components/screens/Home/Home.js
     
-4. Explore -> Displays all Tweets created by all users:
+5. Explore -> Displays all Tweets created by all users:
     component can be found in /server/client/src/components/screens/Explore/Explore.js
 
-5. Side navigation bar:
+6. Side navigation bar:
     component can be found in /server/client/src/components/Sidebar/Sidebar.js
 
-6. Logged In User Profile:
+7. Logged In User Profile:
     component can be found in /server/client/src/components/Profile/Profile.js
 
-7. Other users profiles:
-    component can be found in /server/client/src/components/Profile/UserProfile.jschrome plugin to save youtube videos
-
-
-
-
-
-/**** BACKEND API FOR TWEETS ****/
-
-1. Create Tweet backend logic:
-
-    Tweet Model can be found in /server/models/tweetModel.js 
-    api endpoints can be found in /server/routes/tweetRoute.js == "/createTweet"
-    controller can be found in /server/controllers/tweetController.js == functions: createTweetController 
-
-. Delete a Tweet backend logic:
-    api endpoints can be found in /server/routes/tweetRoute.js == "/delete"
-    controller can be found in /server/controllers/tweetController.js == function: deleteTweetController
-
-
-. Like and Unlike a tweet backend logic:
-
-    api endpoints can be found in /server/routes/tweetRoute.js == "/like" && "/unlike"
-    controllers can be found in /server/controllers/tweetController.js == functions: likeTweetController && unlikeTweetController
-
-. Fetch all created tweets backendlogic:
-    api endpoints can be found in /server/routes/tweetRoute.js == "/allTweets"
-    controller can be found in /server/controllers/tweetController.js == function: getAllTweetsController
- 
-. Fetch my tweets backend logic:
-    api endpoints can be found in /server/routes/tweetRoute.js == "/myTweets"
-    controller can be found in /server/controllers/tweetController.js == function: getMyTweetsController
-
-. Fetch subscribed tweets backend logic:
-    api endpoints can be found in /server/routes/userRoute.js == "/subscribedTweets"
-    controllers can be found in /server/controllers/userController.js == function: getSubscribedTweetsController
+8. Other users profiles:
+    component can be found in /server/client/src/components/Profile/UserProfile.js
 
