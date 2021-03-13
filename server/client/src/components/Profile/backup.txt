@@ -1,0 +1,72 @@
+{state ? (
+        <div style={{ maxWidth: "500px", margin: "0px auto" }}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-around",
+              margin: "18px 0px",
+              borderBottom: "1px solid grey",
+            }}
+          >
+            <div>
+              <img
+                style={{
+                  width: "160px",
+                  height: "160px",
+                  borderRadius: "80px",
+                }}
+                src={UserProfile.user.photo}
+                alt="avatar"
+              />
+            </div>
+            <div>
+              <h4> {UserProfile.user.username}</h4>
+              <h6> {UserProfile.user.email}</h6>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  width: "108%",
+                }}
+              >
+                <h6>{UserProfile.tweet.length} posts</h6>
+                <h6>
+                  {" "}
+                  {parseInt(UserProfile.user.followers.length) === 1
+                    ? `${UserProfile.user.followers.length} follower`
+                    : `${UserProfile.user.followers.length} followers`}{" "}
+                </h6>
+                <h6> {UserProfile.user.following.length} following</h6>
+                {showFollow ? (
+                  <button
+                    className="btn btn-primary btn-sm"
+                    onClick={() => handleFollow()}
+                  >
+                    follow
+                  </button>
+                ) : (
+                  <button
+                    className="btn btn-primary btn-sm"
+                    onClick={() => handleUnfollow()}
+                  >
+                    unfollow
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+
+          <div className="gallery">
+            {UserProfile.posts.map((post) => (
+              <img
+                className="item mb-2"
+                key={post._id}
+                src={post.photo}
+                alt={post.title}
+              />
+            ))}
+          </div>
+        </div>
+      ) : (
+        showLoading()
+      )}

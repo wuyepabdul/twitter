@@ -1,0 +1,265 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Times New Roman", Times, serif;
+}
+
+/* Home */
+.home-container {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.home-feeds {
+  flex: 0.6;
+}
+
+/* trends */
+.trends-container {
+  flex: 0.2;
+}
+
+/* sidebar */
+.sidebar-container {
+  position: fixed;
+}
+
+.twitter-icon {
+  margin-left: 1rem;
+}
+.nav-link {
+  color: black;
+}
+
+.sidebar-homeIcon {
+  margin-bottom: 1.2rem;
+  margin-left: 0.5rem;
+}
+
+.sidebar-twitterIcon {
+  color: rgb(61, 148, 240);
+  margin-left: 0.6rem;
+}
+.sidebar-twitterIcon:hover {
+  border-radius: 50%;
+  background-color: rgb(221, 237, 243);
+  cursor: pointer;
+}
+
+.sidebar {
+  margin-left: 1rem;
+}
+
+.sidebar-layout {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.1rem;
+  padding: 0.4rem 0.2rem;
+  width: 10rem;
+}
+
+.sidebar-layoutText {
+  margin-left: 0.5rem;
+}
+
+.sidebar-layout:hover {
+  background-color: rgb(221, 237, 243);
+  color: rgb(80, 187, 226);
+  cursor: pointer;
+  border-radius: 5rem;
+}
+
+.sidebar-profile {
+  display: flex;
+  flex-direction: row;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 60px;
+}
+.nav-item {
+  padding: 0.1rem 0.1rem;
+}
+
+/* tweetbox */
+.tweet-container {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+.tweetBox-container {
+  display: flex;
+  flex-direction: column;
+  padding-left: 1.5rem;
+  border-bottom: 0.2rem solid grey;
+}
+
+.tweetBox {
+  display: flex;
+  align-items: center;
+}
+
+.tweetBox > form > textarea {
+  border: none;
+  width: 100%;
+  font-size: 1.2rem;
+  margin-left: 1rem;
+}
+
+.tweetBox > form > textarea:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.tweet-avatar img {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+}
+.tweetBox > form {
+  margin-top: 1rem;
+}
+
+.tweetBox-title {
+  border-bottom: 0.2rem solid beige;
+}
+
+.tweet-fileUpload {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between im !important;
+}
+
+.tweet-button > button {
+  border: bisque;
+  border-radius: 4rem;
+  background: rgb(80, 187, 226);
+  padding: 0.6rem 2rem;
+  color: white;
+  margin-bottom: 0.8rem;
+}
+
+.tweet-button > button:hover {
+  border: bisque;
+  cursor: pointer;
+  border-radius: 4rem;
+  background: rgb(25, 153, 199);
+  padding: 0.6rem 2rem;
+  color: white;
+  margin-bottom: 0.8rem;
+}
+
+.tweet-button-block > button {
+  width: 80%;
+  border: bisque;
+  border-radius: 4rem;
+  background: rgb(61, 148, 240);
+  padding: 0.6rem 2rem;
+  color: white;
+  margin-bottom: 0.8rem;
+  margin-left: 0.5rem;
+}
+
+.tweet-button-block > button:hover {
+  border: bisque;
+  cursor: pointer;
+  border-radius: 4rem;
+  background: rgb(25, 109, 199);
+  padding: 0.6rem 2rem;
+  color: white;
+  margin-bottom: 0.8rem;
+}
+
+/* tweet card */
+.like-tweet {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+.like-tweet-icon {
+  cursor: pointer;
+}
+.card-body {
+  display: flex;
+  justify-content: space-between;
+}
+.tweet-image img {
+  margin-bottom: 1rem;
+  width: 100%;
+  height: 12rem;
+  object-fit: cover;
+}
+.unlike-tweet-icon {
+  color: red;
+  cursor: pointer;
+}
+
+.delete-tweet {
+  float: right;
+  cursor: pointer;
+}
+
+/* Profile */
+.profile-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 2rem;
+}
+
+.profile-gallery img {
+  width: 10rem;
+  height: 10rem;
+  border-radius: 50%;
+  margin-left: 0;
+}
+.profile-gallery .custom-file {
+  margin-top: 3rem;
+}
+
+.profile-userDetails .follow-button {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.profile-userDetails .follow-button .follow {
+  border-radius: 1rem;
+}
+
+.profile-follow {
+  display: flex;
+  margin-top: 2rem;
+}
+.profile-follow > ul > li {
+  display: inline-block;
+  padding-right: 2rem;
+}
+
+.logout {
+  cursor: pointer;
+}
+
+/* userProfile */
+.userProfile-container {
+  max-width: 500px;
+  margin: "0px auto";
+}
+
+.userProfile-info {
+  display: "flex";
+  justify-content: "space-around";
+  margin: "18px 0px";
+  border-bottom: "1px solid grey";
+}
+.userProfile-image img {
+  width: 10rem;
+  height: 10rem;
+  border-radius: 80px;
+}
+
+/*trends  */
+.trends-container {
+  position: fixed;
+}
