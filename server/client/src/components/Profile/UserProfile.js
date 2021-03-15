@@ -11,24 +11,11 @@ const UserProfile = () => {
   const history = useHistory();
   const [UserProfile, setUserProfile] = useState(null);
   const { userId } = useParams();
-  const user = localStorage.getItem("user");
+  const user = JSON.parse(localStorage.getItem("user"));
   const dispatch = useDispatch();
 
-  const state = useSelector((state) => state.user);
-
-  /*
-  convert obj to array
-   if array !== 0, return true/false if following list includes logged user 
-   else if array === 0, return 'loading'
-   else return true
-  
-  */
   const [showFollow, setShowFollow] = useState(
-    Object.keys(state).length !== 0
-      ? !state.following.includes(userId)
-      : Object.keys(state).length === 0
-      ? "loading"
-      : true
+    user.following.includes(userId) ? false : true
   );
 
   useEffect(() => {
@@ -46,9 +33,15 @@ const UserProfile = () => {
       .catch((err) => console.log(err));
   }, []);
 
+  const checkFollow = (userId) => {
+    const match = user.following.includes(userId);
+    return match;
+  };
+
   const handleFollow = () => {
     followUser(userId)
       .then((response) => {
+        console.log("followRes", response.data);
         dispatch(
           followAction({
             followers: response.data.followers,
@@ -77,6 +70,7 @@ const UserProfile = () => {
   const handleUnfollow = () => {
     unfollowUser(userId)
       .then((response) => {
+        console.log("unFollowRes", response.data);
         dispatch(
           unfollowAction({
             followers: response.data.followers,
@@ -106,6 +100,7 @@ const UserProfile = () => {
         <Sidebar />
       </div>
       <div className="col-sm-6">
+        {console.log("user", user)}
         {UserProfile ? (
           <div className="userProfile-container">
             <div className="userProfile-info">
@@ -130,7 +125,6 @@ const UserProfile = () => {
                       : `${UserProfile.user.followers.length} followers`}{" "}
                   </h6>
                   <h6> {UserProfile.user.following.length} following</h6>
-                  {console.log(UserProfile)}
                   {showFollow ? (
                     <button
                       className="btn btn-primary btn-sm"

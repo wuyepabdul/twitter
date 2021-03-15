@@ -173,7 +173,7 @@ module.exports.unfollowUserController = async (req, res) => {
         //update loggedIn user following List
         const updateUserFollowing = await User.findByIdAndUpdate(
           req.user._id,
-          { $pull: { following: req.body.followId } },
+          { $pull: { following: req.body.unfollowId } },
           { new: true }
         ).select("-password");
         if (updateUserFollowing) {
