@@ -84,28 +84,33 @@ const Signin = () => {
         <div className="col-sm-4"></div>
         <div className="col-md-4">
           <form onSubmit={handleSubmit}>
-            {console.log(password)}
             <h2 className=" mt-3 text-center">Sign-In</h2>
-            {errorMsg && showErrorMessage(errorMsg)}
-            {loading && showLoading()}
+            <div className="showLoading mt-4">
+              {loading && showLoading()}
+              {errorMsg && showErrorMessage(errorMsg)}
+            </div>
 
-            <TextField
-              id="standard-basic"
-              name="email"
-              label="Email"
-              value={email}
-              onChange={handleChange}
-              fullWidth
-            />
-            <TextField
-              id="standard-basic"
-              name="password"
-              label="Password"
-              type="password"
-              value={password}
-              onChange={handleChange}
-              fullWidth
-            />
+            <div className="input-fields">
+              <TextField
+                id="standard-basic"
+                name="email"
+                label="Email"
+                value={email}
+                onChange={handleChange}
+                fullWidth={true}
+              />
+            </div>
+            <div>
+              <TextField
+                id="standard-basic"
+                name="password"
+                label="Password"
+                type="password"
+                value={password}
+                onChange={handleChange}
+                fullWidth={true}
+              />
+            </div>
 
             <button type="submit" className="btn btn-primary mt-4 form-control">
               {" "}

@@ -105,8 +105,10 @@ const Signup = () => {
         <div className="col-md-4">
           <form onSubmit={handleSubmit}>
             <h2 className=" mt-3 text-center">Sign-Up</h2>
-            {errorMsg && showErrorMessage(errorMsg)}
-            {loading && showLoading()}
+            <div className="showLoading mt-4">
+              {loading && showLoading()}
+              {errorMsg && showErrorMessage(errorMsg)}
+            </div>
 
             <TextField
               id="standard-basic"
@@ -115,7 +117,7 @@ const Signup = () => {
               label="Username"
               value={username}
               onChange={handleChange}
-              fullWidth
+              fullWidth={true}
             />
             <TextField
               id="standard-basic"
@@ -124,7 +126,7 @@ const Signup = () => {
               label="Email"
               value={email}
               onChange={handleChange}
-              fullWidth
+              fullWidth={true}
             />
 
             <TextField
@@ -134,7 +136,7 @@ const Signup = () => {
               label="Password"
               value={password}
               onChange={handleChange}
-              fullWidth
+              fullWidth={true}
             />
             <TextField
               id="standard-basic"
@@ -143,7 +145,7 @@ const Signup = () => {
               type="password"
               value={confirmPassword}
               onChange={handleChange}
-              fullWidth
+              fullWidth={true}
             />
 
             <button type="submit" className="btn btn-primary mt-4 form-control">
@@ -152,7 +154,7 @@ const Signup = () => {
             </button>
             <h6 className="text-center mt-2">
               {" "}
-              Have an Account? <Link to="signup">Sign In</Link>{" "}
+              Have an Account? <Link to="/signin">Sign In</Link>{" "}
             </h6>
           </form>
         </div>

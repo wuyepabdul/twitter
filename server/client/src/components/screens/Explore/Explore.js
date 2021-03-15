@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import FavoriteIcon from "@material-ui/icons/Favorite";
-import { showNoDataError } from "../../../helpers/message";
+import { showErrorMessage, showNoDataError } from "../../../helpers/message";
 import Tweet from "../Tweet/Tweet";
 import {
   deleteTweet,
@@ -90,6 +90,7 @@ const Explore = () => {
 
           // set state Data with new data
           setData(newData);
+          window.location.reload();
         }
       })
       .catch((err) => console.log(err));
@@ -104,7 +105,9 @@ const Explore = () => {
         <div className="col-sm-6">
           <Tweet />
           <div className="list-group">
-            {errorMessage && showNoDataError(errorMessage)}
+            <div className="showLoading mt-4">
+              {errorMessage && showNoDataError(errorMessage)}
+            </div>
             {data.map((tweet) => (
               <div className="card list-group-item" key={tweet._id}>
                 <div className="card-body ">

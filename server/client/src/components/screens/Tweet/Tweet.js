@@ -3,8 +3,6 @@ import { createTweet } from "../../../api/tweet";
 import { isEmpty } from "validator";
 import { uploadPhoto } from "../../../api/cloudinaryRequests";
 import { showErrorMessage } from "../../../helpers/message";
-import { TextField } from "@material-ui/core";
-import { getUserLocalStorage } from "../../../helpers/localStorage";
 import { useHistory } from "react-router";
 import { showLoading } from "../../../helpers/loading";
 
@@ -93,8 +91,8 @@ const Tweet = () => {
           </div>
         </div>
         <div className="tweetBox">
-          <div className="tweet-avatar tweet-title">
-            <img src={user ? user.photo : `/img`} alt="avatar" />
+          <div className="tweet-avatar tweet-title avatar-img">
+            <img src={user.photo} alt="avatar" />
           </div>
 
           <form className="form" onSubmit={handleSubmit}>
@@ -106,7 +104,7 @@ const Tweet = () => {
               value={tweetData}
               placeholder="What's happening ?"
               onChange={handleChange}
-              fullWidth
+              fullWidth={true}
             />
             <div className="input-group mb-3 input-fields">
               <input

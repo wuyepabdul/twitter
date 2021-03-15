@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { Link, useHistory, useParams } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import { showNoDataError } from "../../../helpers/message";
@@ -10,31 +10,21 @@ import {
   likeTweet,
   unlikeTweet,
 } from "../../../api/tweet";
-import { useDispatch, useSelector } from "react-redux";
 import Sidebar from "../../Sidebar/Sidebar";
 import Trends from "../Trends/Trends";
+import { isAuthenticated } from "../../../helpers/auth";
 
 const Home = () => {
   const history = useHistory();
   const [data, setData] = useState([]);
-  const [subscribedTweets, setSubscribedTweets] = useState([]);
-  const [button, setButton] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const [userData, setUserData] = useState({});
-  const { userId } = useParams();
-
-  const [loading, setLoading] = useState(false);
-  const state = useSelector((state) => state.user);
 
   const user = JSON.parse(localStorage.getItem("user"));
 
-  const dispatch = useDispatch();
-
   /* useEffect gets mounted when page loads  */
   useEffect(() => {
-    if (user !== undefined) {
+    if (isAuthenticated) {
       //get all tweets and add to local state
-      setUserData(user);
       getMyTweets()
         .then((response) => {
           if (response.data.myTweets.length === 0) {
@@ -48,7 +38,7 @@ const Home = () => {
     } else {
       history.push("/signin");
     }
-  }, []);
+  }, [history]);
 
   /* like a tweet handler */
   const handleLike = (id) => {
@@ -88,7 +78,6 @@ const Home = () => {
 
   /* delete a tweet handler */
   const handleDelete = (tweetId) => {
-    setLoading(true);
     deleteTweet(tweetId)
       .then((result) => {
         if (window.confirm("Are you sure?")) {
@@ -97,12 +86,10 @@ const Home = () => {
           });
           setData(newData);
         }
-        setLoading(false);
         //reload page
         window.location.reload();
       })
       .catch((err) => console.log(err));
-    setLoading(false);
   };
 
   return (
@@ -114,7 +101,6 @@ const Home = () => {
         <div className="col-sm-6">
           <Tweet />
           <div className="list-group">
-            {console.log("tweets", user)}
             {errorMessage && showNoDataError(errorMessage)}
             {data.map((tweet) => (
               <div className="card list-group-item" key={tweet._id}>

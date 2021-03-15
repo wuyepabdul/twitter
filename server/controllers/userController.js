@@ -97,6 +97,7 @@ module.exports.signinController = async (req, res) => {
 */
 module.exports.getUserProfileController = async (req, res) => {
   try {
+    // find user with given query ID
     const user = await User.findById(req.params.userId).select("-password");
     if (user) {
       //find user tweets

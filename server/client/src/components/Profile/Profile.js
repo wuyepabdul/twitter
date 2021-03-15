@@ -46,7 +46,7 @@ const Profile = () => {
         })
         .catch((err) => console.log(err));
     }
-  }, [image, dispatch]);
+  }, [image, state, dispatch]);
 
   const hiddenFileInput = React.useRef(null);
 

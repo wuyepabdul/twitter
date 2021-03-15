@@ -121,6 +121,11 @@
   width: 3rem;
   height: 3rem;
   border-radius: 50%;
+
+}
+
+.avatar-img{
+  margin-bottom: 10rem;
 }
 .tweetBox > form {
   margin-top: 1rem;
@@ -307,4 +312,9 @@
 /*trends  */
 .trends-container {
   position: fixed;
+}
+
+/* signin */
+.input-fields{
+  width: 100%;
 }
