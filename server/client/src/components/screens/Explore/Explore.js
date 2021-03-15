@@ -5,7 +5,6 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 import { showNoDataError } from "../../../helpers/message";
 import Tweet from "../Tweet/Tweet";
 import {
-  addComment,
   deleteTweet,
   getAllTweets,
   likeTweet,
@@ -13,18 +12,17 @@ import {
 } from "../../../api/tweet";
 import Sidebar from "../../Sidebar/Sidebar";
 import Trends from "../Trends/Trends";
+import { isAuthenticated } from "../../../helpers/auth";
 
 const Explore = () => {
   const history = useHistory();
   const [data, setData] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
-  const [userData, setUserData] = useState({});
 
   const user = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
-    // check for user if loggedin
-    if (user !== undefined) {
+    if (isAuthenticated) {
       //get all tweets and add to local state
       getAllTweets()
         .then((response) => {
@@ -33,7 +31,6 @@ const Explore = () => {
               "There are no tweets now, Be among the first user's to create a tweet"
             );
           }
-
           setData(response.data.allTweets);
         })
         .catch((err) => {
@@ -42,7 +39,7 @@ const Explore = () => {
     } else {
       history.push("/signin");
     }
-  }, []);
+  }, [history]);
 
   /* like a tweet handler */
   const handleLike = (id) => {
@@ -57,7 +54,6 @@ const Explore = () => {
           }
         });
 
-        //set state Data with new data
         setData(newData);
       })
       .catch((err) => console.log(err));
@@ -68,7 +64,6 @@ const Explore = () => {
     unlikeTweet(id)
       .then((response) => {
         // iterate like list for new data if unlike button is clicked
-
         const newData = data.map((item) => {
           if (item._id === response.data._id) {
             return response.data;
@@ -130,7 +125,9 @@ const Explore = () => {
                 <div>
                   <small>
                     {tweet.tweetBy._id === user._id ? (
-                      <Link to="/profile">{tweet.tweetBy.username}</Link>
+                      <Link to="/profile">
+                        {tweet.tweetBy.username} {tweet.tweetBy.email}
+                      </Link>
                     ) : (
                       <Link to={`/profile/${tweet.tweetBy._id}`}>
                         {" "}

@@ -1,9 +1,7 @@
-import React, { Fragment, useEffect, useState } from "react";
-import { Link, useHistory, useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useHistory, useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { showLoading } from "../../helpers/loading";
-import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
-import FavoriteIcon from "@material-ui/icons/Favorite";
 import { followUser, getUserProfile, unfollowUser } from "../../api/userAuth";
 import { followAction, unfollowAction } from "../../redux/actions/userActions";
 import Sidebar from "../Sidebar/Sidebar";
@@ -18,6 +16,7 @@ const UserProfile = () => {
     user.following.includes(userId) ? false : true
   );
 
+  // runs first when the page loads
   useEffect(() => {
     if (!user) {
       history.push("/signin");
@@ -31,17 +30,11 @@ const UserProfile = () => {
         setUserProfile(response.data);
       })
       .catch((err) => console.log(err));
-  }, []);
-
-  const checkFollow = (userId) => {
-    const match = user.following.includes(userId);
-    return match;
-  };
+  }, [history, userId]);
 
   const handleFollow = () => {
     followUser(userId)
       .then((response) => {
-        console.log("followRes", response.data);
         dispatch(
           followAction({
             followers: response.data.followers,
@@ -70,7 +63,6 @@ const UserProfile = () => {
   const handleUnfollow = () => {
     unfollowUser(userId)
       .then((response) => {
-        console.log("unFollowRes", response.data);
         dispatch(
           unfollowAction({
             followers: response.data.followers,
@@ -100,31 +92,18 @@ const UserProfile = () => {
         <Sidebar />
       </div>
       <div className="col-sm-6">
-        {console.log("user", user)}
         {UserProfile ? (
           <div className="userProfile-container">
             <div className="userProfile-info">
               <div className="userProfile-image">
                 <img src={UserProfile.user.photo} alt="avatar" />
               </div>
-              <div>
-                <h4> {UserProfile.user.username}</h4>
-                <h6> {UserProfile.user.email}</h6>
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    width: "108%",
-                  }}
-                >
-                  <h6>{UserProfile.tweets.length} tweets</h6>
-                  <h6>
-                    {" "}
-                    {parseInt(UserProfile.user.followers.length) === 1
-                      ? `${UserProfile.user.followers.length} follower`
-                      : `${UserProfile.user.followers.length} followers`}{" "}
-                  </h6>
-                  <h6> {UserProfile.user.following.length} following</h6>
+              <div className="flex-display">
+                <div>
+                  <h4> {UserProfile.user.username}</h4>
+                  <h6> {UserProfile.user.email}</h6>{" "}
+                </div>
+                <div>
                   {showFollow ? (
                     <button
                       className="btn btn-primary btn-sm"
@@ -142,69 +121,26 @@ const UserProfile = () => {
                   )}
                 </div>
               </div>
-            </div>
 
-            <div className="gallery">
-              {UserProfile.tweets.map((tweet) => (
-                <div className="card list-group-item" key={tweet._id}>
-                  <div className="card-body ">
-                    <i
-                      className="fa fa-trash delete-tweet"
-                      aria-hidden="true"
-                    ></i>
-
-                    <div className="tweet-title">
-                      <div className="tweet-image">
-                        <img src="/" alt="avatar" />
-                      </div>
-                      <h5 className="card-text">
-                        <small>
-                          <Link to={`/profile/${tweet.tweetBy._id}`}>
-                            <p>
-                              {" "}
-                              {tweet.tweetBy.username} {"||"}{" "}
-                              {tweet.tweetBy.email}
-                            </p>
-                          </Link>
-                          {tweet.createdAt.substring(0, 10)}
-                        </small>
-                      </h5>
-                    </div>
-                    <p className="card-text">{tweet.tweet}</p>
-                  </div>
-                  <div className="tweet-image">
-                    <img src={tweet.photo} alt="avatar" />
-                  </div>
-
-                  <div className="like-tweet ">
-                    <div>
-                      <i className="fa fa-comment" aria-hidden="true"></i>
-                    </div>
-
-                    <div>
-                      <i className="fa fa-retweet" aria-hidden="true"></i>
-                    </div>
-                    <div>
-                      {/* {tweet.likes.includes(user._id) ? (
-                        <FavoriteIcon
-                          className="unlike-tweet-icon"
-                          onClick={() => handleUnlike(tweet._id)}
-                        />
-                      ) : (
-                        <FavoriteBorderIcon
-                          className="like-tweet-icon"
-                          onClick={() => handleLike(tweet._id)}
-                        />
-                      )} */}
-                      {tweet.likes.length} likes
-                    </div>
-
-                    <div>
-                      <i className="fa fa-upload" aria-hidden="true"></i>
-                    </div>
-                  </div>
+              <div className="user-info mt-5">
+                <div>
+                  {" "}
+                  <h6>{UserProfile.tweets.length} tweets</h6>{" "}
                 </div>
-              ))}
+                <div>
+                  {" "}
+                  <h6>
+                    {" "}
+                    {parseInt(UserProfile.user.followers.length) === 1
+                      ? `${UserProfile.user.followers.length} follower`
+                      : `${UserProfile.user.followers.length} followers`}{" "}
+                  </h6>
+                </div>
+                <div>
+                  {" "}
+                  <h6> {UserProfile.user.following.length} following</h6>
+                </div>
+              </div>
             </div>
           </div>
         ) : (

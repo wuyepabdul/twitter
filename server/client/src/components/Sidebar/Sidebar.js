@@ -1,8 +1,6 @@
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import { logout } from "../../helpers/auth";
-import { deleteCookie } from "../../helpers/cookies";
-import { deleteLocalStorage } from "../../helpers/localStorage";
 import HomeIcon from "@material-ui/icons/Home";
 import NotificationsNoneIcon from "@material-ui/icons/NotificationsNone";
 import MailOutlineIcon from "@material-ui/icons/MailOutline";
@@ -13,11 +11,9 @@ import InfoIcon from "@material-ui/icons/Info";
 import TwitterIcon from "@material-ui/icons/Twitter";
 
 const Sidebar = () => {
-  const user = JSON.parse(localStorage.getItem("user"));
   const history = useHistory();
   const handleLogout = () => {
-    deleteLocalStorage("user");
-    deleteCookie("token");
+    logout();
     history.push("/signin");
   };
   return (

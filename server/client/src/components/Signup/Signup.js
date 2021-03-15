@@ -4,12 +4,10 @@ import { isEmpty, isEmail, equals } from "validator";
 import { showErrorMessage } from "../../helpers/message";
 import { showLoading } from "../../helpers/loading";
 import { signup } from "../../api/userAuth";
-import { uploadPhoto } from "../../api/cloudinaryRequests";
 import { TextField } from "@material-ui/core";
 
 const Signup = () => {
   const history = useHistory();
-  const [postImage, setPostImage] = useState(undefined);
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -27,8 +25,8 @@ const Signup = () => {
     errorMsg,
     loading,
   } = formData;
-  /*  */
 
+  /* input fields event handler  */
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -38,6 +36,7 @@ const Signup = () => {
     });
   };
 
+  /* signup handler */
   const handleSignup = (data) => {
     signup(data)
       .then((response) => {
@@ -56,6 +55,7 @@ const Signup = () => {
       });
   };
 
+  /* submit handler */
   const handleSubmit = async (e) => {
     e.preventDefault();
     setFormData({
@@ -119,6 +119,7 @@ const Signup = () => {
             />
             <TextField
               id="standard-basic"
+              type="email"
               name="email"
               label="Email"
               value={email}

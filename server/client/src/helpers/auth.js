@@ -18,9 +18,7 @@ export const isAuthenticated = () => {
   }
 };
 
-export const logout = (next) => {
-  deleteCookie("token");
+export const logout = () => {
   deleteLocalStorage("user");
-
-  next();
+  deleteCookie("token");
 };

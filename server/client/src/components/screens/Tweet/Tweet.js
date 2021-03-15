@@ -6,6 +6,7 @@ import { showErrorMessage } from "../../../helpers/message";
 import { TextField } from "@material-ui/core";
 import { getUserLocalStorage } from "../../../helpers/localStorage";
 import { useHistory } from "react-router";
+import { showLoading } from "../../../helpers/loading";
 
 const Tweet = () => {
   const [tweetData, setTweetData] = useState("");
@@ -46,7 +47,6 @@ const Tweet = () => {
       setLoading(true);
       createTweet(formData)
         .then((response) => {
-          console.log("createTweetResponse", response.data);
           window.location.reload();
           // setTweetData("");
           setLoading(false);
@@ -87,7 +87,10 @@ const Tweet = () => {
       <div className="tweetBox-container">
         <div className="tweetBox-title">
           <h3>Home</h3>
-          {errorMsg && showErrorMessage(errorMsg)}
+          <div className="showLoading mt-4">
+            {loading && showLoading()}
+            {errorMsg && showErrorMessage(errorMsg)}
+          </div>
         </div>
         <div className="tweetBox">
           <div className="tweet-avatar tweet-title">

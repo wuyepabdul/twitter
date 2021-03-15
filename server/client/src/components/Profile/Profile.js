@@ -17,7 +17,6 @@ const Profile = () => {
   const [image, setImage] = useState("");
   const dispatch = useDispatch();
   const state = useSelector((state) => state.user);
-  console.log("profileRedux", state);
   useEffect(() => {
     if (!isAuthenticated) {
       history.push("/signin");
@@ -31,25 +30,23 @@ const Profile = () => {
         });
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [history, ProfileData]);
 
   useEffect(() => {
     if (image) {
       uploadPhoto(image)
         .then((response) => {
-          console.log("response", response);
           updateProfilePhoto(response.data.url).then((result) => {
             localStorage.setItem(
               "user",
               JSON.stringify({ ...state, photo: result.data.photo })
             );
             dispatch(updatePhoto(result.data.photo));
-            console.log("result response =>", result);
           });
         })
         .catch((err) => console.log(err));
     }
-  }, [image]);
+  }, [image, dispatch]);
 
   const hiddenFileInput = React.useRef(null);
 
@@ -71,82 +68,55 @@ const Profile = () => {
           {!ProfileData ? (
             showLoading()
           ) : (
-            <div
-              className="px-10"
-              style={{ maxWidth: "500px", margin: "0px auto", padding: "10px" }}
-            >
-              <div
-                style={{
-                  margin: "18px 0px",
-                  borderBottom: "1px solid grey",
-                }}
-              >
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-around",
-                  }}
-                >
-                  <div>
-                    <img
-                      style={{
-                        width: "160px",
-                        height: "160px",
-                        borderRadius: "80px",
-                      }}
-                      src={state ? state.photo : "loading.."}
-                      alt="avatar"
+            <div className="userProfile-container">
+              <div className="userProfile-image">
+                <img src={state ? state.photo : "loading.."} alt="avatar" />
+              </div>
+              <div className="flex-display">
+                {" "}
+                <div className="">
+                  <h4> {state.username}</h4>
+                  <h6> {state.email}</h6>
+                </div>
+                <div className=" mb-3">
+                  <button
+                    className="btn btn-primary "
+                    onClick={handleEditClick}
+                  >
+                    Edit Pic
+                  </button>
+                  <div className="custom-file">
+                    <input
+                      type="file"
+                      name="tweetImage"
+                      ref={hiddenFileInput}
+                      className="custom-file-input"
+                      id="inputGroupFile01"
+                      aria-describedby="inputGroupFileAddon01"
+                      onChange={handleImageUpload}
+                      style={{ display: "none" }}
                     />
                   </div>
-                  <div></div>
-                  <div>
-                    <h4> {state.username}</h4>
-                    <h6> {state.email}</h6>
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        width: "108%",
-                      }}
-                    >
-                      <h6>{ProfileData.mytweet.length} tweets</h6>
-                      <h6>
-                        {" "}
-                        {state.followers
-                          ? `${state.followers.length} followers`
-                          : ""}
-                      </h6>
-                      <h6>
-                        {" "}
-                        {state.following
-                          ? `${state.following.length} following`
-                          : ""}
-                      </h6>
-                    </div>
-                  </div>
                 </div>
-
-                <div>
-                  <div className="input-group mb-3">
-                    <button
-                      className="btn btn-primary "
-                      onClick={handleEditClick}
-                      style={{ margin: "10px 0px 10px 48px" }}
-                    >
-                      Edit Pic
-                    </button>
-                    <div className="custom-file">
-                      <input
-                        type="file"
-                        name="tweetImage"
-                        ref={hiddenFileInput}
-                        className="custom-file-input"
-                        id="inputGroupFile01"
-                        aria-describedby="inputGroupFileAddon01"
-                        onChange={handleImageUpload}
-                        style={{ display: "none" }}
-                      />
-                    </div>
+              </div>
+              <div className="">
+                <div className="user-info mt-5">
+                  <div>
+                    <h6>{ProfileData.mytweet.length} tweets</h6>
+                  </div>
+                  <div>
+                    <h6>
+                      {state.followers
+                        ? `${state.followers.length} followers`
+                        : ""}
+                    </h6>
+                  </div>
+                  <div>
+                    <h6>
+                      {state.following
+                        ? `${state.following.length} following`
+                        : ""}
+                    </h6>
                   </div>
                 </div>
               </div>

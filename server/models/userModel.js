@@ -10,7 +10,8 @@ const userSchema = new mongoose.Schema(
     following: [{ type: ObjectId, ref: "User" }],
     photo: {
       type: String,
-      default: "avatar",
+      default:
+        "https://res.cloudinary.com/dulswuyep/image/upload/v1600786450/noPic2_n3wb1g.png",
     },
   },
   { timestamps: true }
