@@ -148,20 +148,19 @@ module.exports.unlikeTweetController = async (req, res) => {
 // @access Private
 module.exports.tweetCommentController = async (req, res) => {
   try {
-    const comment = { text: req.body.text, commentBy: req.user._id };
+    const comment = { text: req.body.text, tweetBy: req.user._id };
     Tweet.findByIdAndUpdate(
-      tweetId,
+      req.body.tweetId,
       {
         $push: { comments: comment },
       },
       { new: true }
     )
-      .populate("comments.commentBy", "_id username")
+      .populate("comments.tweetBy", "_id username")
+      .populate("tweetBy", "_id username")
       .exec((err, result) => {
         if (err) {
-          res
-            .status(422)
-            .json({ message: err && err.message ? err.message : err });
+          res.status(422).json({ message: err.message });
         } else {
           res.json(result);
         }

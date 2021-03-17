@@ -4,16 +4,19 @@ import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import { showErrorMessage, showNoDataError } from "../../../helpers/message";
 import Tweet from "../Tweet/Tweet";
+import { isEmpty } from "validator";
 import {
+  addComment,
   deleteTweet,
   getAllTweets,
-  getSubscribedTweets,
   likeTweet,
   unlikeTweet,
 } from "../../../api/tweet";
 import Sidebar from "../../Sidebar/Sidebar";
 import Trends from "../Trends/Trends";
 import { isAuthenticated } from "../../../helpers/auth";
+import { useDispatch, useSelector } from "react-redux";
+import { setFormAction } from "../../../redux/actions/tweetActions";
 
 const Explore = () => {
   const history = useHistory();
@@ -23,6 +26,10 @@ const Explore = () => {
   const [errorMessage, setErrorMessage] = useState("");
 
   const user = JSON.parse(localStorage.getItem("user"));
+  const [tweetComment, setTweetComment] = useState("");
+  const showForm = useSelector((state) => state.showForm);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -80,6 +87,28 @@ const Explore = () => {
         setData(newData);
       })
       .catch((err) => console.log(err));
+  };
+
+  /* add a comment handler */
+
+  const handleAddComment = (tweetId, text) => {
+    dispatch(setFormAction());
+    if (isEmpty(text)) {
+      setErrorMessage("Comment Cannot be empty");
+    } else {
+      addComment(tweetId, text)
+        .then((response) => {
+          const newData = data.map((item) => {
+            if (item._id === response.data._id) {
+              return response.data;
+            } else {
+              return item;
+            }
+          });
+          setData(newData);
+        })
+        .catch((err) => console.log("AddComment error", err.message));
+    }
   };
 
   /* delete a tweet handler */
@@ -157,7 +186,11 @@ const Explore = () => {
 
                 <div className="like-tweet ">
                   <div>
-                    <i className="fa fa-comment" aria-hidden="true"></i>
+                    <i
+                      className="fa fa-comment tweet-comment"
+                      aria-hidden="true"
+                      onClick={() => dispatch(setFormAction())}
+                    ></i>
                   </div>
 
                   <div>
@@ -182,6 +215,39 @@ const Explore = () => {
                     <i className="fa fa-upload" aria-hidden="true"></i>
                   </div>
                 </div>
+                {showForm && (
+                  <div>
+                    <div className="mt-2">
+                      <form
+                        onSubmit={(e) => {
+                          e.preventDefault();
+                          handleAddComment(tweet._id, tweetComment);
+                        }}
+                      >
+                        <textarea
+                          placeholder="comment"
+                          name="text"
+                          value={tweetComment}
+                          onChange={(e) => setTweetComment(e.target.value)}
+                          className="form-control"
+                        ></textarea>
+                        <button type="submit" className="mt-1 mb-1">
+                          Add Comment
+                        </button>
+                      </form>
+                    </div>
+                    <div className="mt-3">
+                      {tweet.comments.map((comment) => {
+                        return (
+                          <div key={comment._id}>
+                            <b>{comment.tweetBy.username}: </b>
+                            {comment.text}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
               </div>
             ))}
           </div>

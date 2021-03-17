@@ -16,6 +16,15 @@
   flex: 0.6;
 }
 
+.tweet-comment{
+  color: rgb(0, 195, 255);
+  cursor: pointer;
+}
+
+.tweet-comment:hover{
+  color: aqua;
+}
+
 /* trends */
 .trends-container {
   flex: 0.2;

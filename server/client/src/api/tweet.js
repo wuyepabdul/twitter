@@ -73,16 +73,17 @@ export const getSubscribedTweets = async () => {
 };
 
 /* comment on a tweet */
-export const addComment = async (text, tweetId) => {
+export const addComment = async (tweetId, text) => {
   const config = {
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${getCookie("token")}`,
     },
   };
-  const body = JSON.stringify({ text, tweetId });
+  const body = JSON.stringify({ tweetId, text });
 
   const response = await axios.put("/api/tweet/comment", body, config);
+  console.log("commetRes ", response);
   return response;
 };
 

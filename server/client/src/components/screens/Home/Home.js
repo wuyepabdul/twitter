@@ -1,10 +1,13 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import { showNoDataError } from "../../../helpers/message";
+import { setFormAction } from "../../../redux/actions/tweetActions";
 import Tweet from "../Tweet/Tweet";
 import {
+  addComment,
   deleteTweet,
   getMyTweets,
   getSubscribedTweets,
@@ -14,6 +17,7 @@ import {
 import Sidebar from "../../Sidebar/Sidebar";
 import Trends from "../Trends/Trends";
 import { isAuthenticated } from "../../../helpers/auth";
+import { isEmpty } from "validator";
 
 const Home = () => {
   const history = useHistory();
@@ -22,10 +26,12 @@ const Home = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [subscribedTweets, setSubscribedTweets] = useState([]);
   const [allTweets, setAllTweets] = useState([]);
+  const [tweetComment, setTweetComment] = useState("");
 
   const user = JSON.parse(localStorage.getItem("user"));
 
-  /* useEffect gets mounted when page loads  */
+  const dispatch = useDispatch();
+  const showForm = useSelector((state) => state.showForm);
 
   //get my tweets
   useEffect(() => {
@@ -56,7 +62,7 @@ const Home = () => {
           setSubscribedTweets(response.data.subscribedTweets);
         })
         .catch((err) => {
-          console.log(err.response.data.errorMessage);
+          console.log(err);
         });
     } else {
       history.push("/signin");
@@ -80,7 +86,6 @@ const Home = () => {
           }
         });
         setData(newData);
-        console.log(newData);
       })
       .catch((err) => console.log(err));
   };
@@ -91,17 +96,36 @@ const Home = () => {
       .then((response) => {
         const newData = data.map((item) => {
           if (item._id === response.data._id) {
-            console.log("responsedata", response.data);
             return response.data;
           } else {
-            console.log("item", item);
             return item;
           }
         });
         setData(newData);
-        console.log(newData);
       })
       .catch((err) => console.log(err));
+  };
+
+  /* add a comment handler */
+
+  const handleAddComment = (tweetId, text) => {
+    dispatch(setFormAction());
+    if (isEmpty(text)) {
+      setErrorMessage("Comment Cannot be empty");
+    } else {
+      addComment(tweetId, text)
+        .then((response) => {
+          const newData = data.map((item) => {
+            if (item._id === response.data._id) {
+              return response.data;
+            } else {
+              return item;
+            }
+          });
+          setData(newData);
+        })
+        .catch((err) => console.log("AddComment error", err.message));
+    }
   };
 
   /* delete a tweet handler */
@@ -134,7 +158,14 @@ const Home = () => {
               <div className="card list-group-item" key={tweet._id}>
                 <div className="card-body ">
                   <div className="tweet-avatar tweet-title">
-                    <img src={tweet.tweetBy.photo} alt="avatar" />
+                    <img
+                      src={
+                        user._id === tweet.tweetBy._id
+                          ? user.photo
+                          : tweet.tweetBy.photo
+                      }
+                      alt="avatar"
+                    />
                   </div>
                   <div>
                     {" "}
@@ -173,7 +204,11 @@ const Home = () => {
 
                 <div className="like-tweet ">
                   <div>
-                    <i className="fa fa-comment" aria-hidden="true"></i>
+                    <i
+                      className="fa fa-comment tweet-comment"
+                      aria-hidden="true"
+                      onClick={() => dispatch(setFormAction())}
+                    ></i>
                   </div>
 
                   <div>
@@ -198,6 +233,39 @@ const Home = () => {
                     <i className="fa fa-upload" aria-hidden="true"></i>
                   </div>
                 </div>
+                {showForm && (
+                  <div>
+                    <div className="mt-2">
+                      <form
+                        onSubmit={(e) => {
+                          e.preventDefault();
+                          handleAddComment(tweet._id, tweetComment);
+                        }}
+                      >
+                        <textarea
+                          placeholder="comment"
+                          name="text"
+                          value={tweetComment}
+                          onChange={(e) => setTweetComment(e.target.value)}
+                          className="form-control"
+                        ></textarea>
+                        <button type="submit" className="mt-1 mb-1">
+                          Add Comment
+                        </button>
+                      </form>
+                    </div>
+                    <div className="mt-3">
+                      {tweet.comments.map((comment) => {
+                        return (
+                          <div key={comment._id}>
+                            <b>{comment.tweetBy.username}: </b>
+                            {comment.text}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
               </div>
             ))}
           </div>
