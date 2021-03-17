@@ -135,9 +135,13 @@ const Home = () => {
                 <div className="mt-2">
                   <p>{tweet.tweet}</p>{" "}
                 </div>
-                <div className="tweet-image">
-                  <img src={tweet.photo} alt="avatar" />
-                </div>
+                {tweet.photo !== null ? (
+                  <div className="tweet-image">
+                    <img src={tweet.photo} alt="avatar" />
+                  </div>
+                ) : (
+                  ""
+                )}
 
                 <div className="like-tweet ">
                   <div>

@@ -104,7 +104,6 @@ const Tweet = () => {
               value={tweetData}
               placeholder="What's happening ?"
               onChange={handleChange}
-              fullWidth={true}
             />
             <div className="input-group mb-3 input-fields">
               <input

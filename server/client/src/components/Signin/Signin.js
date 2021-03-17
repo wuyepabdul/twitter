@@ -92,7 +92,7 @@ const Signin = () => {
 
             <div className="input-fields">
               <TextField
-                id="standard-basic"
+                id="email"
                 name="email"
                 label="Email"
                 value={email}
@@ -102,7 +102,7 @@ const Signin = () => {
             </div>
             <div>
               <TextField
-                id="standard-basic"
+                id="password"
                 name="password"
                 label="Password"
                 type="password"

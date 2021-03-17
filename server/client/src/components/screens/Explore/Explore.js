@@ -26,6 +26,7 @@ const Explore = () => {
       //get all tweets and add to local state
       getAllTweets()
         .then((response) => {
+          console.log("res", response.data);
           if (response.data.allTweets.length === 0) {
             setErrorMessage(
               "There are no tweets now, Be among the first user's to create a tweet"
@@ -143,9 +144,13 @@ const Explore = () => {
                 <div className="mt-2">
                   <p>{tweet.tweet}</p>{" "}
                 </div>
-                <div className="tweet-image">
-                  <img src={tweet.photo} alt="avatar" />
-                </div>
+                {tweet.photo !== null ? (
+                  <div className="tweet-image">
+                    <img src={tweet.photo} alt="avatar" />
+                  </div>
+                ) : (
+                  ""
+                )}
 
                 <div className="like-tweet ">
                   <div>

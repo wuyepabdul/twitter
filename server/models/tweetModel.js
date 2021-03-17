@@ -6,8 +6,7 @@ const tweetSchema = new mongoose.Schema(
     tweet: { type: String, required: true },
     photo: {
       type: String,
-      default:
-        "https://res.cloudinary.com/dulswuyep/image/upload/v1615796469/grayish_d9gttj.jpg",
+      default: null,
     },
     likes: [{ type: ObjectId, ref: "User" }],
     comments: [

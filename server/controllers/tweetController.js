@@ -7,7 +7,7 @@ const Tweet = require("../models/tweetModel");
 module.exports.createTweetController = async (req, res) => {
   try {
     const { tweet, photo } = req.body;
-    console.log("tweetDataFromClien", tweet, photo);
+
     const newTweet = new Tweet({
       tweet,
       tweetBy: req.user,

@@ -111,7 +111,7 @@ const Signup = () => {
             </div>
 
             <TextField
-              id="standard-basic"
+              id="username"
               type="text"
               name="username"
               label="Username"
@@ -120,7 +120,7 @@ const Signup = () => {
               fullWidth={true}
             />
             <TextField
-              id="standard-basic"
+              id="email"
               type="email"
               name="email"
               label="Email"
@@ -130,7 +130,7 @@ const Signup = () => {
             />
 
             <TextField
-              id="standard-basic"
+              id="password"
               type="password"
               name="password"
               label="Password"
@@ -139,7 +139,7 @@ const Signup = () => {
               fullWidth={true}
             />
             <TextField
-              id="standard-basic"
+              id="confirmPassword"
               name="confirmPassword"
               label="Confirm Password"
               type="password"
