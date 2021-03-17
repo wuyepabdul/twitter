@@ -7,6 +7,7 @@ import Tweet from "../Tweet/Tweet";
 import {
   deleteTweet,
   getMyTweets,
+  getSubscribedTweets,
   likeTweet,
   unlikeTweet,
 } from "../../../api/tweet";
@@ -16,19 +17,23 @@ import { isAuthenticated } from "../../../helpers/auth";
 
 const Home = () => {
   const history = useHistory();
+
   const [data, setData] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
+  const [subscribedTweets, setSubscribedTweets] = useState([]);
+  const [allTweets, setAllTweets] = useState([]);
 
   const user = JSON.parse(localStorage.getItem("user"));
 
   /* useEffect gets mounted when page loads  */
+
+  //get my tweets
   useEffect(() => {
     if (isAuthenticated) {
-      //get all tweets and add to local state
       getMyTweets()
         .then((response) => {
           if (response.data.myTweets.length === 0) {
-            setErrorMessage("You have no tweets.. Create one");
+            setErrorMessage("You have not created a tweet.. Create one");
           }
           setData(response.data.myTweets);
         })
@@ -39,6 +44,29 @@ const Home = () => {
       history.push("/signin");
     }
   }, [history]);
+
+  // get subscribed tweets
+  useEffect(() => {
+    if (isAuthenticated) {
+      //get all tweets and add to local state
+      getSubscribedTweets()
+        .then((response) => {
+          console.log("res", response.data);
+
+          setSubscribedTweets(response.data.subscribedTweets);
+        })
+        .catch((err) => {
+          console.log(err.response.data.errorMessage);
+        });
+    } else {
+      history.push("/signin");
+    }
+  }, [history]);
+
+  // merge my tweets and subscribed tweets
+  useEffect(() => {
+    setAllTweets([...data, ...subscribedTweets]);
+  }, [subscribedTweets, data]);
 
   /* like a tweet handler */
   const handleLike = (id) => {
@@ -102,11 +130,11 @@ const Home = () => {
           <Tweet />
           <div className="list-group">
             {errorMessage && showNoDataError(errorMessage)}
-            {data.map((tweet) => (
+            {allTweets.map((tweet) => (
               <div className="card list-group-item" key={tweet._id}>
                 <div className="card-body ">
                   <div className="tweet-avatar tweet-title">
-                    <img src={user.photo} alt="avatar" />
+                    <img src={tweet.tweetBy.photo} alt="avatar" />
                   </div>
                   <div>
                     {" "}

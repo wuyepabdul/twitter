@@ -7,6 +7,7 @@ import Tweet from "../Tweet/Tweet";
 import {
   deleteTweet,
   getAllTweets,
+  getSubscribedTweets,
   likeTweet,
   unlikeTweet,
 } from "../../../api/tweet";
@@ -16,7 +17,9 @@ import { isAuthenticated } from "../../../helpers/auth";
 
 const Explore = () => {
   const history = useHistory();
+
   const [data, setData] = useState([]);
+
   const [errorMessage, setErrorMessage] = useState("");
 
   const user = JSON.parse(localStorage.getItem("user"));

@@ -52,7 +52,7 @@ module.exports.getSubscribedTweetsController = async (req, res) => {
       tweetBy: { $in: req.user.following },
     })
       .sort({ createdAt: -1 })
-      .populate("tweetBy", "_id username email");
+      .populate("tweetBy", "_id username email photo");
     if (subscribedTweets) {
       res.json({ subscribedTweets });
     } else {
@@ -72,7 +72,7 @@ module.exports.getMyTweetsController = async (req, res) => {
     /*  */
     const myTweets = await Tweet.find({ tweetBy: req.user._id })
       .sort({ createdAt: -1 })
-      .populate("tweetBy", "_id username email");
+      .populate("tweetBy", "_id username email photo");
     if (myTweets) {
       res.json({ myTweets });
     } else {
