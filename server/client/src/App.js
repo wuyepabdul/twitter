@@ -37,7 +37,6 @@ function App() {
         <Route exact path="/signin" component={Signin} />
         <Route exact path="/profile" component={Profile} />
         <Route exact path="/profile/:userId" component={UserProfile} />
-        <Route exact path="/profile/:userId" component={} />
 
         <Route component={NotFound} />
       </Switch>
