@@ -1,3 +1,9 @@
+#Dependencies
 node_modules
+
+#misc
 .env
 dev.js
+
+#production
+/client/build
